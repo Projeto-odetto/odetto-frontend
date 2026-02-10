@@ -1,13 +1,19 @@
 import './App.css'
 import Header from './components/header/header'
-import IconButton from './components/iconButton/iconButton'
+import ObservationCard from './components/observationCard/observationCard'
 
 function App() {
+  const obs = {
+    subject: "Mobile",
+    author: "Nisflei",
+    observation: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dolor eros, auctor non eros sed, vulputate pharetra ante."
+  }
+
   return (
     <>
       <Header/>
 
-      <IconButton icon="/odetto-logo-black.svg"/>
+      <ObservationCard {...obs}/>
     </>
   )
 }
