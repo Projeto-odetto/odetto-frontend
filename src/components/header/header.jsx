@@ -11,6 +11,7 @@ function Header() {
 
                 <div className={styles.right}>
                     <h3 className={styles.username}>Lucas Grassas</h3>
+                    <h4 className={styles.userEnrollment}>1984</h4>
                 </div>
             </div>
         </>

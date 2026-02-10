@@ -3,17 +3,22 @@ import styles from "./button.module.css"
 function Button({
     content,
     variant,
-    size = "sm"
+    size = "sm",
+    disabled = false,
+    onClick
 }) {
     return (
-        <div className={`
+        <button className={`
             ${styles.button}
             ${variant ? styles[variant] : ""}
             ${styles[size]}
-
-        `}>
-            <p className={styles.content}>{content}</p>
-        </div>
+            ${disabled ? styles.disabled : ""}
+        `}
+            disabled={disabled}
+            onClick={onClick}
+        >
+            {content.toUpperCase()}
+        </button>
     )
 }
 
