@@ -1,0 +1,26 @@
+.input {
+    width: 100%;
+    padding: 10px 20px;
+    border: 3px solid var(--color-neutral-75);
+    border-radius: 5px;
+    color: var(--color-neutral-75);
+    font-size: 16px;
+    font-weight: 400;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+}
+.input:focus {
+    outline: none;
+}
+
+.sm {
+    max-width: 210px;
+}
+.md {
+    max-width: 250px;
+}
+.lg {
+    max-width: 300px;
+}
+.xlg {
+    max-width: 440px;
+}

@@ -1,0 +1,41 @@
+.header {
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -80px;
+    padding: 0 20px;
+    background-color: var(--color-primary-100);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoText {
+    color: var(--color-neutral-0);
+    user-select: none;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.username {
+    color: var(--color-neutral-0);
+    user-select: none;
+}
+
+.userEnrollment {
+    color: var(--color-neutral-0);
+    user-select: none;
+}
