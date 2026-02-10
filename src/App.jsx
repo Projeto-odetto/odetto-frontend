@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import Header from './components/header/header'
-import TextInput from './components/textInput/textInput'
 import Button from './components/button/button';
+import InputMultiline from './components/inputMultiline/inputMultiline';
 
 function App() {
   const [texto, setTexto] = useState("Texto");
@@ -11,7 +11,7 @@ function App() {
     <>
       <Header/>
 
-      <TextInput value={texto} onChange={setTexto} size="md"/>
+      <InputMultiline value={texto} placeholder="Insira um texto..." onChange={setTexto}/>
 
       <Button content="Botão" size='md' onClick={() => {console.log(texto)}}/>
     </>
