@@ -11,9 +11,9 @@ function App() {
 
   return (
     <>
-      <Header/>
-
-      <ObservationCard {...obs}/>
+      <Header>
+        <ObservationCard {...obs}/>
+      </Header>
     </>
   )
 }
