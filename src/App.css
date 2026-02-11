@@ -1,7 +1,6 @@
 #root {
-    width: 100%;
-    min-height: calc(100vh - 80px);
-    margin-top: 80px;
+    width: 100vw;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: var(--color-neutral-25);

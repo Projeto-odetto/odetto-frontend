@@ -1,6 +1,6 @@
 import styles from "./header.module.css"
 
-function Header() {
+function Header({children}) {
     return (
         <>
             <div className={styles.header}>
@@ -14,6 +14,8 @@ function Header() {
                     <h4 className={styles.userEnrollment}>1984</h4>
                 </div>
             </div>
+
+            {children}
         </>
     )
 }
