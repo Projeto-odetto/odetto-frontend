@@ -4,6 +4,7 @@ function Button({
     content,
     variant,
     size = "sm",
+    type = "button",
     disabled = false,
     onClick
 }) {
@@ -14,6 +15,7 @@ function Button({
             ${styles[size]}
             ${disabled ? styles.disabled : ""}
         `}
+            type={type}
             disabled={disabled}
             onClick={onClick}
         >
