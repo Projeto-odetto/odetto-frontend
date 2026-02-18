@@ -1,19 +1,14 @@
 import styles from "./observationCard.module.css"
 
-function ObservationCard({
-    author,
-    subject,
-    observation,
-    small = false
-}) {
+function ObservationCard(observation) {
     return (
         <div className={`
             ${styles.card}
-            ${small ? styles.sm : ""}
+            ${observation.small ? styles.sm : ""}
         `}>
-            <h3 className={styles.subject}>{subject}</h3>
-            <h4 className={styles.author}>{author}</h4>
-            <p className={styles.observation}>{observation}</p>
+            <h3 className={styles.subject}>{observation.subject}</h3>
+            <h4 className={styles.author}>{observation.author}</h4>
+            <p className={styles.observation}>{observation.text}</p>
         </div>
     )
 }

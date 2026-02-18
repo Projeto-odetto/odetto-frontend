@@ -1,14 +1,18 @@
 import styles from './studentListItem.module.css'
 import IconButton from '../../../../components/iconButton/iconButton'
+import pen from '../../../../assets/icons/pen.svg'
 
-function StudentListItem(student) {
+function StudentListItem({
+    student,
+    onClickButton
+}) {
     return (
         <div
             className={styles.listItem}
         >
             <p className={styles.studentInfo}>{student.name} | {student.subscription}</p>
 
-            <IconButton icon='odetto-logo.svg'/>
+            <IconButton icon={pen} onClick={onClickButton}/>
         </div>
     )
 }
