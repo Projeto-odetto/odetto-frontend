@@ -12,9 +12,10 @@ function StudentDetails({
     grades,
     observations,
     toPrevious,
-    toNext
+    toNext,
+    onOpenCreateObservation
 }) {
-    const mean = (grades.reduce((acc, grade) => acc + grade, 0) / grades.length).toFixed(1)
+    const gradesMean = (grades.reduce((acc, grade) => acc + grade, 0) / grades.length).toFixed(1)
 
     if (!isOpen || !student) return null
 
@@ -61,7 +62,7 @@ function StudentDetails({
                         ))}
 
                         <div className={styles.tableFooter}>
-                            <h4>Média: {mean}</h4>
+                            <h4>Média: {gradesMean}</h4>
                         </div>
                     </div>
                 </div>
@@ -78,6 +79,7 @@ function StudentDetails({
                     <Button
                         content="Escrever Observação"
                         size='md'
+                        onClick={onOpenCreateObservation}
                     />
                 </div>
             </div>

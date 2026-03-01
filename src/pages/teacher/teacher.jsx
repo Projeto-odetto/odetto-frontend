@@ -5,6 +5,7 @@ import Button from '../../components/button/button'
 import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import { observationsMock } from '../../mocks/observations.mock'
+import CreateObservationModal from './components/createObservationModal/createObservationModal'
 
 function Teacher({students}) {
     const [searchTerm, setSearchTerm] = useState("")
@@ -22,15 +23,17 @@ function Teacher({students}) {
         return matchesName || matchesSubscription
     })
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const [detailsModalodalOpen, setDetailsModalodalOpen] = useState(false)
     const [selectedSubscription, setSelectedSubscription] = useState(null)
     const selectedStudent = filteredStudents.find(
         student => student.subscription === selectedSubscription
     )
 
+    const [observationsModalOpen, setObservationsModalOpen] = useState(false)
+
     function selectStudent(subscription) {
         setSelectedSubscription(subscription)
-        setModalOpen(true)
+        setDetailsModalodalOpen(true)
     }
 
     function toPrevious() {
@@ -51,6 +54,10 @@ function Teacher({students}) {
         if (currentIndex < filteredStudents.length - 1) {
             setSelectedSubscription(filteredStudents[currentIndex + 1].subscription)
         }
+    }
+
+    function createObservation(observation) {
+        console.log(observation)
     }
 
     return (
@@ -81,13 +88,20 @@ function Teacher({students}) {
             </div>
 
             <StudentDetails
-                isOpen={modalOpen}
+                isOpen={detailsModalodalOpen}
                 student={selectedStudent}
-                onClose={() => setModalOpen(false)}
+                onClose={() => setDetailsModalodalOpen(false)}
                 observations={observationsMock}
                 grades={[10, 7, 8]}
                 toPrevious={toPrevious}
                 toNext={toNext}
+                onOpenCreateObservation={() => setObservationsModalOpen(true)}
+            />
+
+            <CreateObservationModal 
+                isOpen={observationsModalOpen}
+                onClose={() => setObservationsModalOpen(false)}
+                onSend={(observation) => createObservation(observation)}
             />
         </>
     )

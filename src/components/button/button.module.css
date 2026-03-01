@@ -26,8 +26,6 @@
 
 .error {
     background-color: var(--color-error-0);
-}
-.error .content {
     color: var(--color-neutral-0);
 }
 .error:active {
