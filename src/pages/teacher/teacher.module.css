@@ -1,0 +1,34 @@
+.pageTitle {
+    margin: 120px 0 0 40px;
+}
+
+.students {
+    max-width: 1200px;
+    height: calc(100vh - 200px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--color-neutral-50);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.studentsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
