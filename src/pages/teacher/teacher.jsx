@@ -33,13 +33,13 @@ function Teacher({students}) {
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
 
     useEffect(() => {
-        async function gett() {
-            const a = await getStudents("Matemática")
+        async function get() {
+            const students = await getStudents("Matemática")
 
-            console.log(a)
+            console.log(students)
         }
 
-        gett()
+        get()
     }, [])
 
     function selectStudent(subscription) {

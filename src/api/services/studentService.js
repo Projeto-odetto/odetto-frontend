@@ -7,3 +7,11 @@ export async function getStudents(subject) {
 
     return response
 }
+
+export async function getGrades(subscription) {
+    const response = await api.get(
+        `/grades/find-grades-by-enrollment/${subscription}`
+    )
+
+    return response
+}
