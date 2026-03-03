@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TextInput from '../../components/textInput/textInput'
 import styles from './teacher.module.css'
 import Button from '../../components/button/button'
@@ -6,6 +6,7 @@ import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import { observationsMock } from '../../mocks/observations.mock'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
+import { getStudents } from '../../api/services/studentService'
 
 function Teacher({students}) {
     const [searchTerm, setSearchTerm] = useState("")
@@ -30,6 +31,16 @@ function Teacher({students}) {
     )
 
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
+
+    useEffect(() => {
+        async function gett() {
+            const a = await getStudents("Matemática")
+
+            console.log(a)
+        }
+
+        gett()
+    }, [])
 
     function selectStudent(subscription) {
         setSelectedSubscription(subscription)
