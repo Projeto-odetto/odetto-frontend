@@ -5,7 +5,7 @@ export async function getStudents(subject) {
         `/student/find-students-by-subject/${subject}`
     )
 
-    return response
+    return response.data
 }
 
 export async function getGrades(subscription) {
@@ -13,5 +13,5 @@ export async function getGrades(subscription) {
         `/grades/find-grades-by-enrollment/${subscription}`
     )
 
-    return response
+    return response.data
 }

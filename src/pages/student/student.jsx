@@ -16,7 +16,7 @@ function Student({
             console.log(grades)
         }
 
-        get(1001)
+        get(2024001)
     }, [])
 
     return (
