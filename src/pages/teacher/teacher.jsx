@@ -7,8 +7,14 @@ import StudentDetails from './components/studentDetails/studentDetails'
 import { observationsMock } from '../../mocks/observations.mock'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
 import { getStudents } from '../../api/services/studentService'
+import { useProtectedRoute } from '../../hooks/useProtectedRoute'
+import { useAuth } from '../../contexts/authContext'
 
 function Teacher({students}) {
+    useProtectedRoute()
+
+    const { user, loading } = useAuth()
+
     const [searchTerm, setSearchTerm] = useState("")
     const filteredStudents = students.filter((student) => {
         const term = searchTerm.toLowerCase().trim()
@@ -70,6 +76,9 @@ function Teacher({students}) {
     function createObservation(observation) {
         console.log(observation)
     }
+
+    if (loading) return null
+    if (!user) return null
 
     return (
         <>

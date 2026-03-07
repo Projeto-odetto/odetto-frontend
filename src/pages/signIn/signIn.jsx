@@ -1,14 +1,39 @@
 import styles from './signIn.module.css'
 import TextInput from '../../components/textInput/textInput'
 import Button from '../../components/button/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/authContext'
 
 function SignIn() {
+    const { user, loginUser } = useAuth()
     const navigate = useNavigate()
 
-    const [email, setEmail] = useState("")
+    const [cpf, setCpf] = useState("")
     const [password, setPassword] = useState("")
+
+    useEffect(() => {
+        if (user) {
+            if (user.enrollment !== undefined) {
+                navigate("/student")
+            }
+            if (user.subject !== undefined) {
+                navigate("/teacher")
+            }
+        }
+    }, [user])
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+
+        try {
+            await loginUser(cpf, password)
+
+            navigate("/student")
+        } catch (err) {
+            console.error("erro ao fazer login: ", err)
+        }
+    }
 
     return (
         <section className={styles.bg}>
@@ -18,11 +43,11 @@ function SignIn() {
                     <h1>Login</h1>
                 </div>
 
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <TextInput
-                        placeholder='E-mail'
-                        value={email}
-                        onChange={setEmail}
+                        placeholder='CPF'
+                        value={cpf}
+                        onChange={setCpf}
                         size='xlg'
                     />
 
