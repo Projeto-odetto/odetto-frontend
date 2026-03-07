@@ -2,10 +2,10 @@ import styles from './gradeListItem.module.css'
 
 function GradeListItem({
     index = 2,
-    subject,
-    teacher,
+    subjectName,
+    teacherName,
     grades,
-    mean
+    average
 }) {
     return (
         <div className={`
@@ -13,11 +13,11 @@ function GradeListItem({
             ${index % 2 === 0 ? styles.white : styles.blue}
         `}>
             <p className={styles.subject}>
-                {subject}
+                {subjectName}
             </p>
 
             <p className={styles.teacher}>
-                {teacher}
+                {teacherName}
             </p>
 
             <div className={styles.grades}>
@@ -27,7 +27,7 @@ function GradeListItem({
             </div>
 
             <p className={styles.mean}>
-                {mean}
+                {average}
             </p>
         </div>
     )

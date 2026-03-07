@@ -2,11 +2,26 @@ import styles from './student.module.css'
 import Button from '../../components/button/button'
 import ObservationCard from '../../components/observationCard/observationCard'
 import GradeListItem from './component/gradeListItem'
+import { useEffect, useState } from 'react'
+import { getGrades } from '../../api/services/studentService'
 
 function Student({
-    observations,
-    gradesData
+    observations
 }) {
+    const [gradesData,setGradesData] = useState([])
+
+    useEffect(() => {
+        async function get(subscription) {
+            const grades = await getGrades(subscription)
+
+            setGradesData(grades)
+        }
+
+        get(2024001)
+    }, [])
+
+    if(!gradesData) return null
+
     return (
         <section className={styles.content}>
             <div className={styles.reportCard}>
