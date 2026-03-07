@@ -15,3 +15,11 @@ export async function getGrades(subscription) {
 
     return response.data
 }
+
+export async function getObservationsStudent(subscription) {
+    const response = await api.get(
+        `/observation/list-observation-by-enrollment/${subscription}`
+    )
+
+    return response.data
+}

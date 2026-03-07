@@ -69,11 +69,14 @@ function StudentDetails({
 
                 <div className={styles.rightContent}>
                     <h2>Observações</h2>
-                    
                     <div className={styles.observations}>
-                        {observations.map((observation) => (
-                            <ObservationCard {...observation}/>
-                        ))}
+                            {observations.length === 0 ? (
+                                <p>Nenhuma observação encontrada.</p>
+                            ) : (
+                                observations.map((observation) => (
+                                    <ObservationCard key={observation.id} {...observation}/>
+                                ))
+                            )}
                     </div>
 
                     <Button

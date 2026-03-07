@@ -3,18 +3,19 @@ import Button from '../../components/button/button'
 import ObservationCard from '../../components/observationCard/observationCard'
 import GradeListItem from './component/gradeListItem'
 import { useEffect, useState } from 'react'
+import { getGrades, getObservationsStudent } from '../../api/services/studentService'
 import { getGrades } from '../../api/services/studentService'
 import { useProtectedRoute } from '../../hooks/useProtectedRoute'
 import { useAuth } from '../../contexts/authContext'
 
 function Student({
-    observations
 }) {
     useProtectedRoute()
 
     const { user, loading } = useAuth()
 
     const [gradesData,setGradesData] = useState([])
+    const [observationsData, setObservationsData] = useState([])
 
     useEffect(() => {
         if (!user) return
@@ -27,6 +28,17 @@ function Student({
         get(user.enrollment)
     }, [user])
 
+    useEffect(() => {
+        async function get(subscription) {
+            const observations = await getObservationsStudent(subscription)
+
+            setObservationsData(observations)
+        }
+
+        get(2024001)
+    })
+ 
+    if(!gradesData) return null
     if (loading) return null
     if (!user) return null
 
@@ -62,8 +74,8 @@ function Student({
                 <h1 className={styles.observationsTitle}>Observações</h1>
 
                 <div className={styles.observations}>
-                    {observations.map((observation) => (
-                        <ObservationCard {...observation}/>
+                    {observationsData.map((observations, i) => (
+                        <ObservationCard {...observations}/>
                     ))}
                 </div>
             </div>
