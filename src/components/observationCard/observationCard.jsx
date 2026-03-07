@@ -7,8 +7,8 @@ function ObservationCard(observation) {
             ${observation.small ? styles.sm : ""}
         `}>
             <h3 className={styles.subject}>{observation.subject}</h3>
-            <h4 className={styles.author}>{observation.author}</h4>
-            <p className={styles.observation}>{observation.text}</p>
+            <h4 className={styles.author}>{observation.teacherName}</h4>
+            <p className={styles.observation}>{observation.observation}</p>
         </div>
     )
 }

@@ -6,7 +6,7 @@ import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import { observationsMock } from '../../mocks/observations.mock'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
-import { getStudents } from '../../api/services/studentService'
+import { getObservationsStudent, getStudents } from '../../api/services/studentService'
 
 function Teacher({students}) {
     const [searchTerm, setSearchTerm] = useState("")
@@ -31,6 +31,22 @@ function Teacher({students}) {
     )
 
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
+
+    const [observationData, setObservationsData] = useState([])
+
+    useEffect(() => {
+        async function loadObservations() {
+
+            if (!selectedSubscription) return
+
+            const observations = await getObservationsStudent(selectedSubscription)
+
+            setObservationsData(observations)
+        }
+
+        loadObservations()
+
+    }, [selectedSubscription])
 
     useEffect(() => {
         async function get() {
@@ -102,7 +118,7 @@ function Teacher({students}) {
                 isOpen={detailsModalodalOpen}
                 student={selectedStudent}
                 onClose={() => setDetailsModalodalOpen(false)}
-                observations={observationsMock}
+                observations={observationData}
                 grades={[10, 7, 8]}
                 toPrevious={toPrevious}
                 toNext={toNext}

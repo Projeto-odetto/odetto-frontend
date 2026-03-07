@@ -3,12 +3,12 @@ import Button from '../../components/button/button'
 import ObservationCard from '../../components/observationCard/observationCard'
 import GradeListItem from './component/gradeListItem'
 import { useEffect, useState } from 'react'
-import { getGrades } from '../../api/services/studentService'
+import { getGrades, getObservationsStudent } from '../../api/services/studentService'
 
 function Student({
-    observations
 }) {
     const [gradesData,setGradesData] = useState([])
+    const [observationsData, setObservationsData] = useState([])
 
     useEffect(() => {
         async function get(subscription) {
@@ -20,6 +20,16 @@ function Student({
         get(2024001)
     }, [])
 
+    useEffect(() => {
+        async function get(subscription) {
+            const observations = await getObservationsStudent(subscription)
+
+            setObservationsData(observations)
+        }
+
+        get(2024001)
+    })
+ 
     if(!gradesData) return null
 
     return (
@@ -54,8 +64,8 @@ function Student({
                 <h1 className={styles.observationsTitle}>Observações</h1>
 
                 <div className={styles.observations}>
-                    {observations.map((observation) => (
-                        <ObservationCard {...observation}/>
+                    {observationsData.map((observations, i) => (
+                        <ObservationCard {...observations}/>
                     ))}
                 </div>
             </div>
