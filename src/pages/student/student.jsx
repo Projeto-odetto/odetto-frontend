@@ -4,21 +4,29 @@ import ObservationCard from '../../components/observationCard/observationCard'
 import GradeListItem from './component/gradeListItem'
 import { useEffect, useState } from 'react'
 import { getGrades, getObservationsStudent } from '../../api/services/studentService'
+import { getGrades } from '../../api/services/studentService'
+import { useProtectedRoute } from '../../hooks/useProtectedRoute'
+import { useAuth } from '../../contexts/authContext'
 
 function Student({
 }) {
+    useProtectedRoute()
+
+    const { user, loading } = useAuth()
+
     const [gradesData,setGradesData] = useState([])
     const [observationsData, setObservationsData] = useState([])
 
     useEffect(() => {
+        if (!user) return
+
         async function get(subscription) {
             const grades = await getGrades(subscription)
-
             setGradesData(grades)
         }
 
-        get(2024001)
-    }, [])
+        get(user.enrollment)
+    }, [user])
 
     useEffect(() => {
         async function get(subscription) {
@@ -31,6 +39,8 @@ function Student({
     })
  
     if(!gradesData) return null
+    if (loading) return null
+    if (!user) return null
 
     return (
         <section className={styles.content}>
