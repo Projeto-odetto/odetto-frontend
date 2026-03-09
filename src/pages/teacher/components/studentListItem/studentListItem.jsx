@@ -10,7 +10,7 @@ function StudentListItem({
         <div
             className={styles.listItem}
         >
-            <p className={styles.studentInfo}>{student.name} | {student.subscription}</p>
+            <p className={styles.studentInfo}>{student.name} | {student.enrollment}</p>
 
             <IconButton icon={pen} onClick={onClickButton}/>
         </div>

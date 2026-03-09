@@ -16,6 +16,14 @@ export async function getGrades(subscription) {
     return response.data
 }
 
+export async function getGradesBySubject(subscription, subject) {
+    const response = await api.get(
+        `/grades/find-grades-by-enrollment-and-subject/${subscription}/${subject}`
+    )
+
+    return response.data
+}
+
 export async function getObservationsStudent(subscription) {
     const response = await api.get(
         `/observation/list-observation-by-enrollment/${subscription}`

@@ -4,18 +4,17 @@ import styles from './teacher.module.css'
 import Button from '../../components/button/button'
 import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
-import { observationsMock } from '../../mocks/observations.mock'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
-import { getObservationsStudent, getStudents } from '../../api/services/studentService'
-import { getStudents } from '../../api/services/studentService'
+import { getGrades, getObservationsStudent, getStudents } from '../../api/services/studentService'
 import { useProtectedRoute } from '../../hooks/useProtectedRoute'
 import { useAuth } from '../../contexts/authContext'
 
-function Teacher({students}) {
+function Teacher() {
     useProtectedRoute()
 
     const { user, loading } = useAuth()
 
+    const [students, setStudents] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const filteredStudents = students.filter((student) => {
         const term = searchTerm.toLowerCase().trim()
@@ -24,74 +23,78 @@ function Teacher({students}) {
             .toLowerCase()
             .includes(term)
 
-        const matchesSubscription = student.subscription
+        const matchesEnrollment = student.enrollment
             .toString()
             .startsWith(term)
 
-        return matchesName || matchesSubscription
+        return matchesName || matchesEnrollment
     })
 
     const [detailsModalodalOpen, setDetailsModalodalOpen] = useState(false)
-    const [selectedSubscription, setSelectedSubscription] = useState(null)
+    const [selectedEnrollment, setSelectedEnrollment] = useState(null)
     const selectedStudent = filteredStudents.find(
-        student => student.subscription === selectedSubscription
+        student => student.enrollment === selectedEnrollment
     )
 
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
 
-    const [observationData, setObservationsData] = useState([])
-
-    useEffect(() => {
-        async function loadObservations() {
-
-            if (!selectedSubscription) return
-
-            const observations = await getObservationsStudent(selectedSubscription)
-
-            setObservationsData(observations)
-        }
-
-        loadObservations()
-
-    }, [selectedSubscription])
-
     useEffect(() => {
         async function get() {
-            const students = await getStudents("Matemática")
+            const studentsData = await getStudents(user.subject)
 
-            console.log(students)
+            setStudents(studentsData)
         }
 
         get()
     }, [])
 
-    function selectStudent(subscription) {
-        setSelectedSubscription(subscription)
+    function selectStudent(enrollment) {
+        setSelectedEnrollment(enrollment)
         setDetailsModalodalOpen(true)
     }
 
     function toPrevious() {
         const currentIndex = filteredStudents.findIndex(
-            student => student.subscription === selectedSubscription
+            student => student.enrollment === selectedEnrollment
         )
 
         if (currentIndex > 0) {
-            setSelectedSubscription(filteredStudents[currentIndex - 1].subscription)
+            setSelectedEnrollment(filteredStudents[currentIndex - 1].enrollment)
         }
     }
 
     function toNext() {
         const currentIndex = filteredStudents.findIndex(
-            student => student.subscription === selectedSubscription
+            student => student.enrollment === selectedEnrollment
         )
 
         if (currentIndex < filteredStudents.length - 1) {
-            setSelectedSubscription(filteredStudents[currentIndex + 1].subscription)
+            setSelectedEnrollment(filteredStudents[currentIndex + 1].enrollment)
         }
     }
 
     function createObservation(observation) {
         console.log(observation)
+    }
+
+    function saveGrades(gradesData) {
+        setStudents(prevStudents =>
+            prevStudents.map(student =>
+                student.enrollment === selectedStudent.enrollment
+                    ? { ...student, gradesData }
+                    : student
+            )
+        )
+    }
+
+    function saveObservations(observationsData) {
+        setStudents(prevStudents =>
+            prevStudents.map(student =>
+                student.enrollment === selectedStudent.enrollment
+                    ? { ...student, observationsData }
+                    : student
+            )
+        )
     }
 
     if (loading) return null
@@ -116,9 +119,9 @@ function Teacher({students}) {
                 <div className={styles.studentsList}>
                     {filteredStudents.map((student, i) => (
                         <StudentListItem
-                            key={student.subscription}
+                            key={student.enrollment}
                             student={student}
-                            onClickButton={() => selectStudent(student.subscription)}
+                            onClickButton={() => selectStudent(student.enrollment)}
                         />
                     ))}
                 </div>
@@ -128,11 +131,11 @@ function Teacher({students}) {
                 isOpen={detailsModalodalOpen}
                 student={selectedStudent}
                 onClose={() => setDetailsModalodalOpen(false)}
-                observations={observationData}
-                grades={[10, 7, 8]}
                 toPrevious={toPrevious}
                 toNext={toNext}
                 onOpenCreateObservation={() => setObservationsModalOpen(true)}
+                onGetGrades={(grades) => saveGrades(grades)}
+                onGetObservations={(observations) => saveObservations(observations)}
             />
 
             <CreateObservationModal 
