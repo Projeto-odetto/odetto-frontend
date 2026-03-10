@@ -5,9 +5,11 @@ import Button from '../../components/button/button'
 import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
-import { getGrades, getObservationsStudent, getStudents } from '../../api/services/studentService'
+import { getStudents } from '../../api/services/studentService'
 import { useProtectedRoute } from '../../hooks/useProtectedRoute'
 import { useAuth } from '../../contexts/authContext'
+import Dropdown from '../../components/dropdown/dropdown'
+import EditGradesModal from './components/editGradesModal/editGradesModal'
 
 function Teacher() {
     useProtectedRoute()
@@ -36,6 +38,7 @@ function Teacher() {
         student => student.enrollment === selectedEnrollment
     )
 
+    const [editGradesModalOpen, setEditGradesModalOpen] = useState(false)
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
 
     useEffect(() => {
@@ -100,6 +103,8 @@ function Teacher() {
     if (loading) return null
     if (!user) return null
 
+    const [grade, setGrade] = useState("")
+
     return (
         <>
             <h1 className={styles.pageTitle}>Seus Alunos</h1>
@@ -136,12 +141,19 @@ function Teacher() {
                 onOpenCreateObservation={() => setObservationsModalOpen(true)}
                 onGetGrades={(grades) => saveGrades(grades)}
                 onGetObservations={(observations) => saveObservations(observations)}
+                onOpenEditGrades={() => setEditGradesModalOpen(true)}
             />
 
             <CreateObservationModal 
                 isOpen={observationsModalOpen}
                 onClose={() => setObservationsModalOpen(false)}
                 onSend={(observation) => createObservation(observation)}
+            />
+
+            <EditGradesModal
+                isOpen={editGradesModalOpen}
+                onClose={() => setEditGradesModalOpen(false)}
+                student={selectedStudent}
             />
         </>
     )
