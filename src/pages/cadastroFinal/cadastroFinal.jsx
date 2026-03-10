@@ -1,24 +1,25 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from './adminSignIn.module.css'
+import { useAuth } from '../../contexts/authContext'
+import styles from './cadastroFinal.module.css'
 import TextInput from '../../components/textInput/textInput'
 import Button from '../../components/button/button'
-import { adminLogin } from '../../api/services/adminService'
+import api from '../../api/config'
 
-function AdminSignIn() {
+function CadastroFinal() {
+    const { user, loginUser } = useAuth()
     const navigate = useNavigate()
-    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
     async function handleSubmit(e) {
         e.preventDefault()
-        try {
-            const response = await adminLogin(email, password)
-            localStorage.setItem("admin", JSON.stringify(response))
-            navigate("/adminStudent")
-        } catch (err) {
-            console.error("Erro ao fazer login como admin: ", err)
-        }
+        await api.patch("/student/cadastro-final", {
+            enrollment: user.enrollment,
+            name,
+            password
+        })
+        navigate("/student")
     }
 
     return (
@@ -26,30 +27,28 @@ function AdminSignIn() {
             <div className={styles.content}>
                 <div className={styles.title}>
                     <img src="/odetto-logo-black.svg" alt="logo"/>
-                    <h1>Login Admin</h1>
+                    <h1>Primeiro Acesso</h1>
+                    <p>Complete seu cadastro para continuar.</p>
                 </div>
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextInput
-                        placeholder="E-mail"
-                        value={email}
-                        onChange={setEmail}
+                        placeholder="Nome Completo"
+                        value={name}
+                        onChange={setName}
                         size="xlg"
                     />
                     <TextInput
-                        placeholder="Senha"
+                        placeholder="Nova Senha"
                         value={password}
                         onChange={setPassword}
                         size="xlg"
                     />
-                    <div className={styles.actions}>
-                        <Button content="Voltar" onClick={() => navigate("/sign-in")}/>
-                        <Button content="Entrar" type="submit"/>
-                    </div>
+                    <Button content="Finalizar Cadastro" type="submit" size="lg"/>
                 </form>
             </div>
         </section>
     )
 }
 
-export default AdminSignIn
+export default CadastroFinal

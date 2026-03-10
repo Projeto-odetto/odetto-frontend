@@ -3,15 +3,33 @@ import TextInput from '../../components/textInput/textInput'
 import Button from '../../components/button/button'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/authContext'
+import api from '../../api/config'
 
 function SignOn() {
     const navigate = useNavigate()
+    const { user } = useAuth()
 
     const [name, setName] = useState("")
-    const [subscription, setSubscription] = useState("")
-    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+
+        if (password !== confirmPassword) {
+            console.error("Senhas não coincidem")
+            return
+        }
+
+        await api.patch("/student/cadastro-final", {
+            enrollment: user.enrollment,
+            name,
+            password
+        })
+
+        navigate("/student")
+    }
 
     return (
         <section className={styles.bg}>
@@ -21,25 +39,11 @@ function SignOn() {
                     <h1>Cadastro</h1>
                 </div>
 
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <TextInput
                         placeholder='Nome Completo'
                         value={name}
                         onChange={setName}
-                        size='xlg'
-                    />
-
-                    <TextInput
-                        placeholder='Matrícula'
-                        value={subscription}
-                        onChange={setSubscription}
-                        size='xlg'
-                    />
-
-                    <TextInput
-                        placeholder='E-mail'
-                        value={email}
-                        onChange={setEmail}
                         size='xlg'
                     />
 
@@ -60,17 +64,14 @@ function SignOn() {
                     <div className={styles.actions}>
                         <div className={styles.buttons}>
                             <Button
-                                content='Login'
-                                onClick={() => {navigate('/sign-in')}}
+                                content='Voltar'
+                                onClick={() => navigate('/sign-in')}
                             />
-
                             <Button
                                 content='Fazer Cadastro'
                                 type='submit'
                             />
                         </div>
-
-                        <a href="" className={styles.userAdm}>Entrar como administrador</a>
                     </div>
                 </form>
             </div>

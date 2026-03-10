@@ -21,6 +21,7 @@ export const AuthProvider = ({children}) => {
 
         setUser(loggedUser)
         localStorage.setItem("user", JSON.stringify(loggedUser))
+        return loggedUser
     }
 
     function setSelectedSubject(subject) {
