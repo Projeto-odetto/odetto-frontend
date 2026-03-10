@@ -8,6 +8,7 @@ import CreateObservationModal from './components/createObservationModal/createOb
 import { getStudents } from '../../api/services/studentService'
 import { useAuth } from '../../contexts/authContext'
 import EditGradesModal from './components/editGradesModal/editGradesModal'
+import AssignGradesModal from './components/assignGradesModal/assignGradesModal'
 
 function Teacher() {
     const { user, loading } = useAuth()
@@ -34,6 +35,7 @@ function Teacher() {
         student => student.enrollment === selectedEnrollment
     )
 
+    const [assignGradesModalOpen, setAssignGradesModalOpen] = useState(false)
     const [editGradesModalOpen, setEditGradesModalOpen] = useState(false)
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
 
@@ -108,7 +110,10 @@ function Teacher() {
                         size='lg'
                     />
 
-                    <Button content="Atribuir Notas"/>
+                    <Button
+                        content="Atribuir Notas"
+                        onClick={() => setAssignGradesModalOpen(true)}
+                    />
                 </div>
 
                 <div className={styles.studentsList}>
@@ -144,6 +149,12 @@ function Teacher() {
                 isOpen={editGradesModalOpen}
                 onClose={() => setEditGradesModalOpen(false)}
                 student={selectedStudent}
+            />
+
+            <AssignGradesModal
+                isOpen={assignGradesModalOpen}
+                onClose={() => setAssignGradesModalOpen(false)}
+                students={filteredStudents}
             />
         </>
     )

@@ -24,6 +24,19 @@ export async function getGradesBySubject(subscription, subject) {
     return response.data
 }
 
+export async function insertGrade(studentName, subjectName, gradeValue) {
+    const response = await api.post(
+        "/grades/insert",
+        {
+            studentName,
+            subjectName,
+            gradeValue
+        }
+    )
+
+    return response.data
+}
+
 export async function editGrade(studentName, subjectName, gradeIndex, newGradeValue) {
     const response = await api.put(
         "/grades/edit",
