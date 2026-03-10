@@ -6,6 +6,7 @@
     padding: 100px 40px 40px 40px;
     margin-left: 220px;
 }
+
 .teachers {
     display: flex;
     flex-direction: column;
@@ -15,12 +16,14 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
 .actions {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .teachersList {
     display: flex;
     flex-direction: column;

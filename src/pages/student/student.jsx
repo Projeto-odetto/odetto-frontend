@@ -5,9 +5,9 @@ import GradeListItem from './component/gradeListItem'
 import { useEffect, useState } from 'react'
 import { getGrades, getObservationsStudent } from '../../api/services/studentService'
 import { useAuth } from '../../contexts/authContext'
+import { generateReportPdf } from "../../utils/generateReportPdf"
 
-function Student({
-}) {
+function Student() {
     const { user, loading } = useAuth()
 
     const [gradesData,setGradesData] = useState([])
@@ -29,10 +29,15 @@ function Student({
             const observations = await getObservationsStudent(subscription)
 
             setObservationsData(observations)
+            console.log(observations)
         }
 
-        get(2024001)
-    })
+        get(user.enrollment)
+    }, [])
+
+    function handleDownload() {
+        generateReportPdf(user, gradesData, observationsData)
+    }
  
     if(!gradesData) return null
     if (loading) return null
@@ -45,7 +50,10 @@ function Student({
                     <h1 className={styles.reportCardTitle}>Boletim</h1>
 
                     <div className={styles.downloadButton}>
-                        <Button content="Baixar Boletim"/>
+                        <Button 
+                            content="Baixar Boletim"
+                            onClick={handleDownload}
+                        />
                     </div>
                 </div>
 
@@ -61,7 +69,7 @@ function Student({
 
                 <div className={styles.grades}>
                     {gradesData.map((grade, i) => (
-                        <GradeListItem {...grade} index={i}/>
+                        <GradeListItem {...grade} index={i} key={i}/>
                     ))}
                 </div>
             </div>
@@ -70,7 +78,7 @@ function Student({
                 <h1 className={styles.observationsTitle}>Observações</h1>
 
                 <div className={styles.observations}>
-                    {observationsData.map((observations, i) => (
+                    {observationsData.map((observations) => (
                         <ObservationCard {...observations}/>
                     ))}
                 </div>

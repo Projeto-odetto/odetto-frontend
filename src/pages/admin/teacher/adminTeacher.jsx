@@ -35,10 +35,8 @@ function AdminTeachers() {
     return (
         <>
             <SidebarAdmin/>
-
             <section className={style.content}>
                 <h1>Professores</h1>
-
                 <div className={style.teachers}>
                     <div className={style.actions}>
                         <TextInput
@@ -49,7 +47,6 @@ function AdminTeachers() {
                         />
                         <Button content="Criar Professor" onClick={() => setCreateModalOpen(true)}/>
                     </div>
-
                     <div className={style.teachersList}>
                         {filteredTeachers.map(teacher => (
                             <StudentListItem
@@ -61,13 +58,11 @@ function AdminTeachers() {
                     </div>
                 </div>
             </section>
-
             <CreateTeacherModal
                 isOpen={createModalOpen}
                 onClose={() => setCreateModalOpen(false)}
                 onSuccess={loadTeachers}
             />
-
             <EditTeacherModal
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}

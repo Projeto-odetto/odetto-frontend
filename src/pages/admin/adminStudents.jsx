@@ -6,13 +6,12 @@ import StudentListItem from '../teacher/components/studentListItem/studentListIt
 import { getListStudents } from '../../api/services/studentService'
 import { deleteStudent } from '../../api/services/adminService'
 import SidebarAdmin from './components/sidebar'
-import PreCadastroModal from './components/preCadastroModal/PreCadastroModal'
-import EditStudentModal from './components/editStudentModal/EditStudentModal'
+import PreCadastroModal from './components/preCadastroModal/preCadastroModal'
+import EditStudentModal from './components/editStudentModal/editStudentModal'
 
 function AdminStudents() {
     const [students, setStudents] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
-
     const [preCadastroOpen, setPreCadastroOpen] = useState(false)
     const [editModalOpen, setEditModalOpen] = useState(false)
     const [selectedStudent, setSelectedStudent] = useState(null)
@@ -53,7 +52,6 @@ function AdminStudents() {
                             onChange={setSearchTerm}
                             size="lg"
                         />
-
                         <Button
                             content="Realizar Pré-Cadastro"
                             onClick={() => setPreCadastroOpen(true)}
