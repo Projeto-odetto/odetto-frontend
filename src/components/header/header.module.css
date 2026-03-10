@@ -28,8 +28,7 @@
 .right {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .username {
@@ -40,4 +39,60 @@
 .userEnrollment {
     color: var(--color-neutral-0);
     user-select: none;
+}
+
+.dropdown {
+    width: 100%;
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-neutral-0);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 1px);
+    width: 100%;
+    background: var(--color-neutral-0);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.subjectOption {
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-neutral-100);
+    text-align: center;
+    padding: 5px 0;
+}
+
+.subjectOption:hover {
+    background: var(--color-neutral-25);
+}
+
+.sm {
+    max-width: 210px;
+}
+.md {
+    max-width: 250px;
+}
+.lg {
+    max-width: 300px;
+}
+.xlg {
+    max-width: 440px;
 }

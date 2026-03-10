@@ -16,7 +16,8 @@ function StudentDetails({
     toNext,
     onOpenCreateObservation,
     onGetGrades,
-    onGetObservations
+    onGetObservations,
+    onOpenEditGrades
 }) {
     const { user } = useAuth()
     
@@ -27,7 +28,7 @@ function StudentDetails({
         async function getSelectedStudentGrades() {
             if (student.gradesData) return
     
-            const gradesResponse = await getGradesBySubject(student.enrollment, user.subject)
+            const gradesResponse = await getGradesBySubject(student.enrollment, user.selectedSubject)
 
             onGetGrades(gradesResponse)
         }
@@ -99,6 +100,7 @@ function StudentDetails({
                     <Button
                         content="Editar Notas"
                         size='md'
+                        onClick={onOpenEditGrades}
                     />
                 </div>
 

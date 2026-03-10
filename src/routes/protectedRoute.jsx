@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children, type }) {
     }
 
     const isStudent = !!user.enrollment
-    const isTeacher = !!user.subject
+    const isTeacher = !!user.selectedSubject
 
     if (type === "student" && !isStudent) {
         return <Navigate to="/teacher" replace />
