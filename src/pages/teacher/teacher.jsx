@@ -5,13 +5,12 @@ import Button from '../../components/button/button'
 import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
-import { getGrades, getObservationsStudent, getStudents } from '../../api/services/studentService'
-import { useProtectedRoute } from '../../hooks/useProtectedRoute'
+import { getStudents } from '../../api/services/studentService'
 import { useAuth } from '../../contexts/authContext'
+import EditGradesModal from './components/editGradesModal/editGradesModal'
+import AssignGradesModal from './components/assignGradesModal/assignGradesModal'
 
 function Teacher() {
-    useProtectedRoute()
-
     const { user, loading } = useAuth()
 
     const [students, setStudents] = useState([])
@@ -36,11 +35,13 @@ function Teacher() {
         student => student.enrollment === selectedEnrollment
     )
 
+    const [assignGradesModalOpen, setAssignGradesModalOpen] = useState(false)
+    const [editGradesModalOpen, setEditGradesModalOpen] = useState(false)
     const [observationsModalOpen, setObservationsModalOpen] = useState(false)
 
     useEffect(() => {
         async function get() {
-            const studentsData = await getStudents(user.subject)
+            const studentsData = await getStudents(user.selectedSubject)
 
             setStudents(studentsData)
         }
@@ -71,10 +72,6 @@ function Teacher() {
         if (currentIndex < filteredStudents.length - 1) {
             setSelectedEnrollment(filteredStudents[currentIndex + 1].enrollment)
         }
-    }
-
-    function createObservation(observation) {
-        console.log(observation)
     }
 
     function saveGrades(gradesData) {
@@ -113,7 +110,10 @@ function Teacher() {
                         size='lg'
                     />
 
-                    <Button content="Atribuir Notas"/>
+                    <Button
+                        content="Atribuir Notas"
+                        onClick={() => setAssignGradesModalOpen(true)}
+                    />
                 </div>
 
                 <div className={styles.studentsList}>
@@ -136,12 +136,25 @@ function Teacher() {
                 onOpenCreateObservation={() => setObservationsModalOpen(true)}
                 onGetGrades={(grades) => saveGrades(grades)}
                 onGetObservations={(observations) => saveObservations(observations)}
+                onOpenEditGrades={() => setEditGradesModalOpen(true)}
             />
 
             <CreateObservationModal 
                 isOpen={observationsModalOpen}
                 onClose={() => setObservationsModalOpen(false)}
-                onSend={(observation) => createObservation(observation)}
+                student={selectedStudent}
+            />
+
+            <EditGradesModal
+                isOpen={editGradesModalOpen}
+                onClose={() => setEditGradesModalOpen(false)}
+                student={selectedStudent}
+            />
+
+            <AssignGradesModal
+                isOpen={assignGradesModalOpen}
+                onClose={() => setAssignGradesModalOpen(false)}
+                students={filteredStudents}
             />
         </>
     )

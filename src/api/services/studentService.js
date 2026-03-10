@@ -24,6 +24,33 @@ export async function getGradesBySubject(subscription, subject) {
     return response.data
 }
 
+export async function insertGrade(studentName, subjectName, gradeValue) {
+    const response = await api.post(
+        "/grades/insert",
+        {
+            studentName,
+            subjectName,
+            gradeValue
+        }
+    )
+
+    return response.data
+}
+
+export async function editGrade(studentName, subjectName, gradeIndex, newGradeValue) {
+    const response = await api.put(
+        "/grades/edit",
+        {
+            studentName,
+            subjectName,
+            gradeIndex,
+            newGradeValue
+        }
+    )
+    
+    return response.data
+}
+
 export async function getObservationsStudent(subscription) {
     const response = await api.get(
         `/observation/list-observation-by-enrollment/${subscription}`
@@ -35,6 +62,20 @@ export async function getObservationsStudent(subscription) {
 export async function getListStudents() {
     const response = await api.get(
         `/student/list-students`
+      )
+
+    return response.data
+}
+
+export async function createObservation(studentName, teacherName, subjectName, observation) {
+    const response = api.post(
+        "/observation/insert-observation",
+        {
+            studentName,
+            teacherName,
+            subjectName,
+            observation
+        }
     )
 
     return response.data

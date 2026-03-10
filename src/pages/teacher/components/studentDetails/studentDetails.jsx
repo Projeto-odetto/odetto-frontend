@@ -16,7 +16,8 @@ function StudentDetails({
     toNext,
     onOpenCreateObservation,
     onGetGrades,
-    onGetObservations
+    onGetObservations,
+    onOpenEditGrades
 }) {
     const { user } = useAuth()
     
@@ -27,7 +28,7 @@ function StudentDetails({
         async function getSelectedStudentGrades() {
             if (student.gradesData) return
     
-            const gradesResponse = await getGradesBySubject(student.enrollment, user.subject)
+            const gradesResponse = await getGradesBySubject(student.enrollment, user.selectedSubject)
 
             onGetGrades(gradesResponse)
         }
@@ -73,32 +74,36 @@ function StudentDetails({
                                 onClick={toNext}
                             />
                         </div>
-                        <div className={styles.gradesTable}>
-                            <div className={styles.tableHeader}>
-                                <h4>Notas</h4>
-                            </div>
-                            {!student.gradesData ? (
-                                <p>Nenhuma nota encontrada.</p>
-                            ) : (
-                                <>
-                                    {student.gradesData.grades.map((grade, i) => (
-                                        <div key={i} className={styles.tableItem}>
-                                            <p>Nota {i + 1}</p>
-                                            <p>{grade.toFixed(1)}</p>
+
+                        <div className={styles.test}>
+                            <div className={styles.gradesTable}>
+                                <div className={styles.tableHeader}>
+                                    <h4>Notas</h4>
+                                </div>
+                                {!student.gradesData ? (
+                                    <p>Nenhuma nota encontrada.</p>
+                                ) : (
+                                    <>
+                                        {student.gradesData.grades.map((grade, i) => (
+                                            <div key={i} className={styles.tableItem}>
+                                                <p>Nota {i + 1}</p>
+                                                <p>{grade.toFixed(1)}</p>
+                                            </div>
+                                        ))}
+                            
+                                        <div className={styles.tableFooter}>
+                                            <h4>Média: {student.gradesData.average}</h4>
                                         </div>
-                                    ))}
-                                    
-                                    <div className={styles.tableFooter}>
-                                        <h4>Média: {student.gradesData.average}</h4>
-                                    </div>
-                                </>
-                            )}
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
 
                     <Button
                         content="Editar Notas"
                         size='md'
+                        onClick={onOpenEditGrades}
                     />
                 </div>
 

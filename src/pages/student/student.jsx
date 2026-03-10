@@ -4,13 +4,10 @@ import ObservationCard from '../../components/observationCard/observationCard'
 import GradeListItem from './component/gradeListItem'
 import { useEffect, useState } from 'react'
 import { getGrades, getObservationsStudent } from '../../api/services/studentService'
-import { useProtectedRoute } from '../../hooks/useProtectedRoute'
 import { useAuth } from '../../contexts/authContext'
 
 function Student({
 }) {
-    useProtectedRoute()
-
     const { user, loading } = useAuth()
 
     const [gradesData,setGradesData] = useState([])
