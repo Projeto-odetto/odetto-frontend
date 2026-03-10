@@ -1,18 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../../../../components/button/button'
 import InputMultiline from '../../../../components/inputMultiline/inputMultiline'
 import styles from './createObservationModal.module.css'
+import { useAuth } from '../../../../contexts/authContext'
+import { createObservation } from '../../../../api/services/studentService'
 
 function CreateObservationModal({
     isOpen = false,
     onClose,
-    onSend
+    student
 }) {
+    const { user } = useAuth()
+
     const [observation, setObservation] = useState("")
 
-    function cancelObservation() {
-        setObservation("")
+    useEffect(() => {
+        if (isOpen) {
+            setObservation("")
+        }
+    }, [isOpen])
+
+    async function createStudentObservation(e) {
+        e.preventDefault()
         onClose()
+
+        await createObservation(student.name, user.name, user.subject, observation)
     }
 
     if (!isOpen) return null
@@ -24,9 +36,10 @@ function CreateObservationModal({
         `}
             onClick={onClose}
         >
-            <div
+            <form
                 className={styles.modal}
                 onClick={(e) => {e.stopPropagation()}}
+                onSubmit={(e) => createStudentObservation(e)}
             >
                 <h3>Escrever Observação</h3>
 
@@ -41,15 +54,15 @@ function CreateObservationModal({
                     <Button
                         content="Cancelar"
                         variant="error"
-                        onClick={() => cancelObservation()}
+                        onClick={onClose}
                     />
 
                     <Button
                         content="Enviar"
-                        onClick={() => onSend(observation)}
+                        type='submit'
                     />
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
