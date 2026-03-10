@@ -25,11 +25,19 @@ function SignIn() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-
         try {
-            await loginUser(cpf, password)
+            const loggedUser = await loginUser(cpf, password)
 
-            navigate("/student")
+            if (loggedUser.name === null) {
+                navigate("/cadastro-final")
+                return
+            }
+
+            if (loggedUser.enrollment !== undefined) {
+                navigate("/student")
+            } else {
+                navigate("/teacher")
+            }
         } catch (err) {
             console.error("erro ao fazer login: ", err)
         }
@@ -70,8 +78,12 @@ function SignIn() {
                                 type='submit'
                             />
                         </div>
-
-                        <a href="" className={styles.userAdm}>Entrar como administrador</a>
+                        <p 
+                        className={styles.userAdm}
+                        onClick={() => navigate("/admin-sign-in")}
+                        >
+                            Entrar como administrador
+                            </p>
                     </div>
                 </form>
             </div>

@@ -62,21 +62,14 @@ export async function getObservationsStudent(subscription) {
 export async function getListStudents() {
     const response = await api.get(
         `/student/list-students`
-      )
 
     return response.data
 }
 
 export async function createObservation(studentName, teacherName, subjectName, observation) {
-    const response = api.post(
+    const response = await api.post(
         "/observation/insert-observation",
-        {
-            studentName,
-            teacherName,
-            subjectName,
-            observation
-        }
+        { studentName, teacherName, subjectName, observation }
     )
-
     return response.data
 }

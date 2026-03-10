@@ -1,33 +1,75 @@
 import { useEffect, useState } from 'react'
 import style from './adminTeacher.module.css'
 import { getListTeachers } from '../../../api/services/teacherService'
-import Table from '../../../components/table/table'
 import SidebarAdmin from '../components/sidebar'
+import StudentListItem from '../../teacher/components/studentListItem/studentListItem'
+import TextInput from '../../../components/textInput/textInput'
+import Button from '../../../components/button/button'
+import CreateTeacherModal from '../components/createTeacherModal/createTeacherModal'
+import EditTeacherModal from '../components/editTeacherModal/editTeacherModal'
 
 function AdminTeachers() {
-    const [teacherData, setTeacherData] = useState([])
+    const [teachers, setTeachers] = useState([])
+    const [searchTerm, setSearchTerm] = useState("")
+    const [createModalOpen, setCreateModalOpen] = useState(false)
+    const [editModalOpen, setEditModalOpen] = useState(false)
+    const [selectedTeacher, setSelectedTeacher] = useState(null)
 
-    useEffect( () => {
-        async function getTeacher() {
-            const teachers = await getListTeachers()
+    const filteredTeachers = teachers.filter(teacher => {
+        const term = searchTerm.toLowerCase().trim()
+        return (teacher.name ?? "").toLowerCase().includes(term)
+    })
 
-            setTeacherData(teachers)
-        }
+    async function loadTeachers() {
+        const data = await getListTeachers()
+        setTeachers(data)
+    }
 
-        getTeacher()
-    }, [])
+    useEffect(() => { loadTeachers() }, [])
+
+    function openEdit(teacher) {
+        setSelectedTeacher(teacher)
+        setEditModalOpen(true)
+    }
 
     return (
-        <section className={style.container}>
+        <>
             <SidebarAdmin/>
-             <div className={style.actions}>
-            <Table
-                columns={["cpf","name","username","hireDate","subjects"]}
-                titles={["CPF", "Nome", "Login de usuário","Data de entrada", "Matérias"]}
-                values={teacherData}
+            <section className={style.content}>
+                <h1>Professores</h1>
+                <div className={style.teachers}>
+                    <div className={style.actions}>
+                        <TextInput
+                            placeholder="Pesquise os professores aqui..."
+                            value={searchTerm}
+                            onChange={setSearchTerm}
+                            size="lg"
+                        />
+                        <Button content="Criar Professor" onClick={() => setCreateModalOpen(true)}/>
+                    </div>
+                    <div className={style.teachersList}>
+                        {filteredTeachers.map(teacher => (
+                            <StudentListItem
+                                key={teacher.cpf}
+                                student={{ name: teacher.name, enrollment: teacher.cpf }}
+                                onClickButton={() => openEdit(teacher)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+            <CreateTeacherModal
+                isOpen={createModalOpen}
+                onClose={() => setCreateModalOpen(false)}
+                onSuccess={loadTeachers}
             />
-        </div>
-        </section>
+            <EditTeacherModal
+                isOpen={editModalOpen}
+                onClose={() => setEditModalOpen(false)}
+                teacher={selectedTeacher}
+                onSuccess={loadTeachers}
+            />
+        </>
     )
 }
 

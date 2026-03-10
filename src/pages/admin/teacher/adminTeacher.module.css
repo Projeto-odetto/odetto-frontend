@@ -1,19 +1,31 @@
 .content {
-    width: 100%;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center; 
-    gap: 24px;  
-    padding-top: 100px;
+    gap: 24px;
+    padding: 100px 40px 40px 40px;
     margin-left: 220px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-    background: white;
-
 }
 
-.container {
+.teachers {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background-color: var(--color-neutral-50);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.actions {
     width: 100%;
-    max-width: 1000px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.teachersList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

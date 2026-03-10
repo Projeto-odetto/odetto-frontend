@@ -1,60 +1,88 @@
 import { useEffect, useState } from 'react'
 import style from './adminStudent.module.css'
 import TextInput from '../../components/textInput/textInput'
-import Table from '../../components/table/table'
+import Button from '../../components/button/button'
+import StudentListItem from '../teacher/components/studentListItem/studentListItem'
 import { getListStudents } from '../../api/services/studentService'
+import { deleteStudent } from '../../api/services/adminService'
 import SidebarAdmin from './components/sidebar'
+import PreCadastroModal from './components/preCadastroModal/preCadastroModal'
+import EditStudentModal from './components/editStudentModal/editStudentModal'
 
 function AdminStudents() {
-    const [studentsTable, setStudentsTable] = useState([])
-
+    const [students, setStudents] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
-    const filteredStudents = studentsTable.filter((student) => {
-    const term = searchTerm.toLowerCase().trim()
+    const [preCadastroOpen, setPreCadastroOpen] = useState(false)
+    const [editModalOpen, setEditModalOpen] = useState(false)
+    const [selectedStudent, setSelectedStudent] = useState(null)
 
-    const matchesName = student.name
-        .toLowerCase()
-        .includes(term)
-
-    const matchesEnrollment = student.enrollment
-        .toString()
-        .startsWith(term)
-
-    return matchesName || matchesEnrollment
+    const filteredStudents = students.filter((student) => {
+        const term = searchTerm.toLowerCase().trim()
+        const matchesName = (student.name ?? "").toLowerCase().includes(term)
+        const matchesEnrollment = student.enrollment.toString().startsWith(term)
+        return matchesName || matchesEnrollment
     })
 
-    useEffect(() => {
-        async function getStudents() {
-            const students = await getListStudents()
-            console.log(students)
-            setStudentsTable(students)
-        }
+    async function loadStudents() {
+        const data = await getListStudents()
+        setStudents(data)
+    }
 
-        getStudents()
+    useEffect(() => {
+        loadStudents()
     }, [])
 
-
+    function openEdit(student) {
+        setSelectedStudent(student)
+        setEditModalOpen(true)
+    }
 
     return (
-        <section className={style.content}>
+        <>
             <SidebarAdmin/>
-            <div className={style.actions}>
-                    <TextInput
-                        placeholder='Pesquise seus alunos'
-                        value={searchTerm}
-                        onChange={setSearchTerm}
-                        size='lg'
-                    />
-            </div>
 
-            <div className={style.container}>
-            <Table 
-                columns={["enrollment","name","email","cpf"]}
-                titles={["Matrícula", "Nome", "E-mail","CPF"]}
-                values={filteredStudents}
+            <section className={style.content}>
+                <h1>Alunos</h1>
+
+                <div className={style.students}>
+                    <div className={style.actions}>
+                        <TextInput
+                            placeholder="Pesquise os alunos aqui..."
+                            value={searchTerm}
+                            onChange={setSearchTerm}
+                            size="lg"
+                        />
+                        <Button
+                            content="Realizar Pré-Cadastro"
+                            onClick={() => setPreCadastroOpen(true)}
+                        />
+                    </div>
+
+                    <div className={style.studentsList}>
+                        {filteredStudents.map((student) => (
+                            <StudentListItem
+                                key={student.enrollment}
+                                student={student}
+                                onClickButton={() => openEdit(student)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <PreCadastroModal
+                isOpen={preCadastroOpen}
+                onClose={() => setPreCadastroOpen(false)}
+                onSuccess={loadStudents}
             />
-        </div>
-        </section>
+
+            <EditStudentModal
+                isOpen={editModalOpen}
+                onClose={() => setEditModalOpen(false)}
+                student={selectedStudent}
+                onSuccess={loadStudents}
+            />
+        </>
     )
 }
 
