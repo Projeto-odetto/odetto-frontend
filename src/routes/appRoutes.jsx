@@ -15,8 +15,17 @@ export function AppRoutes() {
             <Route path='/' element={<Navigate to='/sign-in'/>}/>
             <Route path='/sign-in' element={<SignIn/>}/>
             <Route path='/sign-on' element={<SignOn/>}/>
-            <Route path='/adminStudent' element={<Admin/>}/>
-            <Route path='/adminTeacher' element={<AdminTeacher/>}/>
+            <Route path='/adminStudent' element={
+                <ProtectedAdminRoute>
+                    <Admin/>
+                </ProtectedAdminRoute>
+            }/>
+            <Route path='/adminTeacher' element={
+                <ProtectedAdminRoute>
+                    <AdminTeacher/>
+                </ProtectedAdminRoute>
+            }/>
+            <Route path='/admin-sign-in' element={<AdminSignIn/>}/>
 
             <Route
                 path='/teacher'

@@ -24,3 +24,7 @@
 .xlg {
     max-width: 440px;
 }
+.disabled {
+    background-color: var(--color-neutral-50);
+    cursor: not-allowed;
+}

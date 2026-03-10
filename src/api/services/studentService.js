@@ -39,3 +39,11 @@ export async function getListStudents() {
 
     return response.data
 }
+
+export async function createObservation(studentName, teacherName, subjectName, observation) {
+    const response = await api.post(
+        "/observation/insert-observation",
+        { studentName, teacherName, subjectName, observation }
+    )
+    return response.data
+}

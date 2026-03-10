@@ -70,8 +70,12 @@ function SignIn() {
                                 type='submit'
                             />
                         </div>
-
-                        <a href="" className={styles.userAdm}>Entrar como administrador</a>
+                        <p 
+                        className={styles.userAdm}
+                        onClick={() => navigate("/admin-sign-in")}
+                        >
+                            Entrar como administrador
+                            </p>
                     </div>
                 </form>
             </div>
