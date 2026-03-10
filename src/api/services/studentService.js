@@ -45,3 +45,17 @@ export async function getObservationsStudent(subscription) {
 
     return response.data
 }
+
+export async function createObservation(studentName, teacherName, subjectName, observation) {
+    const response = api.post(
+        "/observation/insert-observation",
+        {
+            studentName,
+            teacherName,
+            subjectName,
+            observation
+        }
+    )
+
+    return response.data
+}

@@ -76,10 +76,6 @@ function Teacher() {
         }
     }
 
-    function createObservation(observation) {
-        console.log(observation)
-    }
-
     function saveGrades(gradesData) {
         setStudents(prevStudents =>
             prevStudents.map(student =>
@@ -102,8 +98,6 @@ function Teacher() {
 
     if (loading) return null
     if (!user) return null
-
-    const [grade, setGrade] = useState("")
 
     return (
         <>
@@ -147,7 +141,7 @@ function Teacher() {
             <CreateObservationModal 
                 isOpen={observationsModalOpen}
                 onClose={() => setObservationsModalOpen(false)}
-                onSend={(observation) => createObservation(observation)}
+                student={selectedStudent}
             />
 
             <EditGradesModal
