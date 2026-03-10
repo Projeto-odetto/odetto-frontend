@@ -1,0 +1,55 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-neutral-0);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Cabeçalho */
+
+.table thead {
+    background-color: var(--color-primary-100);
+}
+
+.table th {
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-neutral-0);
+    letter-spacing: 0.4px;
+}
+
+/* Linhas */
+
+.table tbody tr {
+    border-bottom: 1px solid var(--color-neutral-50);
+    transition: background 0.15s ease;
+}
+
+/* Zebra */
+
+.table tbody tr:nth-child(even) {
+    background-color: var(--color-neutral-25);
+}
+
+/* Hover */
+
+.table tbody tr:hover {
+    background-color: var(--color-primary-0);
+}
+
+/* Células */
+
+.table td {
+    padding: 14px 18px;
+    font-size: 14px;
+}
+
+/* Última linha sem borda */
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
