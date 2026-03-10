@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import SignIn from "../pages/signIn/signIn"
 import SignOn from "../pages/signOn/signOn"
+import Admin from "../pages/admin/adminStudents"
+import AdminTeacher from "../pages/admin/teacher/adminTeacher"
 import Teacher from "../pages/teacher/teacher"
 import Student from "../pages/student/student"
 import ProtectedRoute from "./protectedRoute"
@@ -13,6 +15,8 @@ export function AppRoutes() {
             <Route path='/' element={<Navigate to='/sign-in'/>}/>
             <Route path='/sign-in' element={<SignIn/>}/>
             <Route path='/sign-on' element={<SignOn/>}/>
+            <Route path='/adminStudent' element={<Admin/>}/>
+            <Route path='/adminTeacher' element={<AdminTeacher/>}/>
 
             <Route
                 path='/teacher'

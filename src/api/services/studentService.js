@@ -31,3 +31,11 @@ export async function getObservationsStudent(subscription) {
 
     return response.data
 }
+
+export async function getListStudents() {
+    const response = await api.get(
+        `/student/list-students`
+    )
+
+    return response.data
+}
