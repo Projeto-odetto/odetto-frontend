@@ -1,5 +1,6 @@
 import styles from "./header.module.css"
 import { useAuth } from '../../contexts/authContext'
+import { useEffect } from "react"
 
 function Header({children}) {
     const { user, logout } = useAuth()
@@ -19,7 +20,7 @@ function Header({children}) {
 
                 <div className={styles.right}>
                     <h3 className={styles.username}>{user.name}</h3>
-                    <h4 className={styles.userEnrollment}>{user.enrollment === undefined ? user.subject : user.enrollment}</h4>
+                    <h4 className={styles.userEnrollment}>{user.enrollment === undefined ? user.selectedSubject : user.enrollment}</h4>
                 </div>
             </div>
 

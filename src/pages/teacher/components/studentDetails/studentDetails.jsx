@@ -28,7 +28,7 @@ function StudentDetails({
         async function getSelectedStudentGrades() {
             if (student.gradesData) return
     
-            const gradesResponse = await getGradesBySubject(student.enrollment, user.subject)
+            const gradesResponse = await getGradesBySubject(student.enrollment, user.selectedSubject)
 
             onGetGrades(gradesResponse)
         }

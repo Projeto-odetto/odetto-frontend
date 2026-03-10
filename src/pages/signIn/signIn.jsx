@@ -17,7 +17,7 @@ function SignIn() {
             if (user.enrollment !== undefined) {
                 navigate("/student")
             }
-            if (user.subject !== undefined) {
+            if (user.selectedSubject !== undefined) {
                 navigate("/teacher")
             }
         }
