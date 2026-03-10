@@ -23,13 +23,22 @@ export const AuthProvider = ({children}) => {
         localStorage.setItem("user", JSON.stringify(loggedUser))
     }
 
+    function setSelectedSubject(subject) {
+        const storedUser = JSON.parse(localStorage.getItem("user"))
+        storedUser.selectedSubject = subject
+        setUser(storedUser)
+        localStorage.setItem("user", JSON.stringify(storedUser))
+
+        window.location.reload()
+    }
+
     function logout() {
         setUser(null)
         localStorage.removeItem("user")
     }
 
     return (
-        <AuthContext.Provider value={{user, loading, loginUser, logout}}>
+        <AuthContext.Provider value={{user, loading, loginUser, logout, setSelectedSubject}}>
             {children}
         </AuthContext.Provider>
     )
