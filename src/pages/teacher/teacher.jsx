@@ -6,14 +6,10 @@ import StudentListItem from './components/studentListItem/studentListItem'
 import StudentDetails from './components/studentDetails/studentDetails'
 import CreateObservationModal from './components/createObservationModal/createObservationModal'
 import { getStudents } from '../../api/services/studentService'
-import { useProtectedRoute } from '../../hooks/useProtectedRoute'
 import { useAuth } from '../../contexts/authContext'
-import Dropdown from '../../components/dropdown/dropdown'
 import EditGradesModal from './components/editGradesModal/editGradesModal'
 
 function Teacher() {
-    useProtectedRoute()
-
     const { user, loading } = useAuth()
 
     const [students, setStudents] = useState([])
@@ -43,7 +39,7 @@ function Teacher() {
 
     useEffect(() => {
         async function get() {
-            const studentsData = await getStudents(user.subject)
+            const studentsData = await getStudents(user.selectedSubject)
 
             setStudents(studentsData)
         }

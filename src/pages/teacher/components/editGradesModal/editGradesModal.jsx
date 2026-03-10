@@ -33,7 +33,7 @@ function EditGradesModal({
         e.preventDefault()
         onClose()
 
-        await editGrade(student.name, user.subject, selectedGrade, newGradeValue)
+        await editGrade(student.name, user.selectedSubject, selectedGrade, newGradeValue)
     }
 
     if (!isOpen || !student) return null

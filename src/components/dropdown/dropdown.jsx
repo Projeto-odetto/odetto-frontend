@@ -43,7 +43,7 @@ function Dropdown({
             >
                 {selectedOption?.label || placeholder}
 
-                <img src={dropdownArrow} className={styles.arrow}/>
+                <img src={dropdownArrow}/>
             </div>
 
             {isOpen && (

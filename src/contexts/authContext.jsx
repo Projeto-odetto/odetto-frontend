@@ -15,8 +15,21 @@ export const AuthProvider = ({children}) => {
 
     async function loginUser(cpf, password) {
         const loggedUser = await login(cpf, password)
+        if (loggedUser.subjects) {
+            loggedUser.selectedSubject = loggedUser.subjects[0]
+        }
+
         setUser(loggedUser)
         localStorage.setItem("user", JSON.stringify(loggedUser))
+    }
+
+    function setSelectedSubject(subject) {
+        const storedUser = JSON.parse(localStorage.getItem("user"))
+        storedUser.selectedSubject = subject
+        setUser(storedUser)
+        localStorage.setItem("user", JSON.stringify(storedUser))
+
+        window.location.reload()
     }
 
     function logout() {
@@ -25,7 +38,7 @@ export const AuthProvider = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{user, loading, loginUser, logout}}>
+        <AuthContext.Provider value={{user, loading, loginUser, logout, setSelectedSubject}}>
             {children}
         </AuthContext.Provider>
     )

@@ -24,7 +24,7 @@ function CreateObservationModal({
         e.preventDefault()
         onClose()
 
-        await createObservation(student.name, user.name, user.subject, observation)
+        await createObservation(student.name, user.name, user.selectedSubject, observation)
     }
 
     if (!isOpen) return null
