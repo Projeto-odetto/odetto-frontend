@@ -16,7 +16,8 @@ function StudentDetails({
     toNext,
     onOpenCreateObservation,
     onGetGrades,
-    onGetObservations
+    onGetObservations,
+    onOpenEditGrades
 }) {
     const { user } = useAuth()
     
@@ -99,6 +100,7 @@ function StudentDetails({
                     <Button
                         content="Editar Notas"
                         size='md'
+                        onClick={onOpenEditGrades}
                     />
                 </div>
 
