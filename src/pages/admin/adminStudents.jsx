@@ -3,6 +3,7 @@ import style from './adminStudent.module.css'
 import TextInput from '../../components/textInput/textInput'
 import Button from '../../components/button/button'
 import StudentListItem from '../teacher/components/studentListItem/studentListItem'
+import Table from '../../components/table/table'
 import { getListStudents } from '../../api/services/studentService'
 import { deleteStudent } from '../../api/services/adminService'
 import SidebarAdmin from './components/sidebar'
@@ -59,13 +60,11 @@ function AdminStudents() {
                     </div>
 
                     <div className={style.studentsList}>
-                        {filteredStudents.map((student) => (
-                            <StudentListItem
-                                key={student.enrollment}
-                                student={student}
-                                onClickButton={() => openEdit(student)}
+                            <Table
+                                columns={["enrollment","name","email","cpf"]}
+                                titles={["Matrícula", "Nome", "E-mail","CPF"]}
+                                values={filteredStudents}
                             />
-                        ))}
                     </div>
                 </div>
             </section>
