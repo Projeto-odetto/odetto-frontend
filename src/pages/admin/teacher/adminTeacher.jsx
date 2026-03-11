@@ -3,6 +3,7 @@ import style from './adminTeacher.module.css'
 import { getListTeachers } from '../../../api/services/teacherService'
 import SidebarAdmin from '../components/sidebar'
 import StudentListItem from '../../teacher/components/studentListItem/studentListItem'
+import Table from '../../../components/table/table'
 import TextInput from '../../../components/textInput/textInput'
 import Button from '../../../components/button/button'
 import CreateTeacherModal from '../components/createTeacherModal/createTeacherModal'
@@ -48,13 +49,11 @@ function AdminTeachers() {
                         <Button content="Criar Professor" onClick={() => setCreateModalOpen(true)}/>
                     </div>
                     <div className={style.teachersList}>
-                        {filteredTeachers.map(teacher => (
-                            <StudentListItem
-                                key={teacher.cpf}
-                                student={{ name: teacher.name, enrollment: teacher.cpf }}
-                                onClickButton={() => openEdit(teacher)}
-                            />
-                        ))}
+                        <Table
+                                columns={["cpf","name","username","hireDate","subjects"]}
+                                titles={["CPF","Nome","Login","Data de entrad", "Matérias"]}
+                                values={filteredTeachers}
+                        />
                     </div>
                 </div>
             </section>
