@@ -39,3 +39,8 @@ export async function deleteTeacher(cpf) {
     const response = await api.delete(`/teacher/delete/${cpf}`)
     return response.data
 }
+
+export async function editStudentSubjects(enrollment, addedSubjects, removedSubjects) {
+    const response = await api.patch("/student/edit-subjects", { enrollment, addedSubjects, removedSubjects })
+    return response.data
+}

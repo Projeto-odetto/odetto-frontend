@@ -53,3 +53,8 @@
 .table tbody tr:last-child {
     border-bottom: none;
 }
+
+.actionCell {
+    width: 50px;
+    text-align: center;
+}
