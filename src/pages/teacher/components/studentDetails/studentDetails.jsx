@@ -66,7 +66,10 @@ function StudentDetails({
                                 onClick={toPrevious}
                             />
                             <div className={styles.selectedStudent}>
-                                <h2>{student.name}</h2>
+                                <h2>
+                                    {student.name.split(" ")[0]}{" "}
+                                    {student.name.split(" ").slice(-1)}
+                                </h2>
                                 <h4> Matrícula {student.enrollment}</h4>
                             </div>
                             <IconButton
