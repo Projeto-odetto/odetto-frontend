@@ -14,6 +14,11 @@ function SignIn() {
 
     useEffect(() => {
         if (user) {
+            if (user.firstLogin) {
+                navigate("/cadastro-final")
+                return
+            }
+
             if (user.enrollment !== undefined) {
                 navigate("/student")
             }
@@ -26,18 +31,7 @@ function SignIn() {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const loggedUser = await loginUser(cpf, password)
-
-            if (loggedUser.name === null) {
-                navigate("/cadastro-final")
-                return
-            }
-
-            if (loggedUser.enrollment !== undefined) {
-                navigate("/student")
-            } else {
-                navigate("/teacher")
-            }
+            await loginUser(cpf, password)
         } catch (err) {
             console.error("erro ao fazer login: ", err)
         }
@@ -67,23 +61,18 @@ function SignIn() {
                     />
 
                     <div className={styles.actions}>
-                        <div className={styles.buttons}>
-                            <Button
-                                content='Cadastro'
-                                onClick={() => {navigate("/sign-on")}}
-                            />
+                        <Button
+                            content='Fazer Login'
+                            size='lg'
+                            type='submit'
+                        />
 
-                            <Button
-                                content='Fazer Login'
-                                type='submit'
-                            />
-                        </div>
                         <p 
                         className={styles.userAdm}
                         onClick={() => navigate("/admin-sign-in")}
                         >
                             Entrar como administrador
-                            </p>
+                        </p>
                     </div>
                 </form>
             </div>
