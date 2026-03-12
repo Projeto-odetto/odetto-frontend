@@ -24,7 +24,7 @@ function Header({children}) {
         setSelectedSubject(subject)
     }
 
-    if (!user) return children
+    if (!user || user.firstLogin) return children
 
     return (
         <>

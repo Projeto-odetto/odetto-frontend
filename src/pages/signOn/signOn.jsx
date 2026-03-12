@@ -8,7 +8,7 @@ import api from '../../api/config'
 
 function SignOn() {
     const navigate = useNavigate()
-    const { user } = useAuth()
+    const { user, loginUser } = useAuth()
 
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
@@ -27,6 +27,8 @@ function SignOn() {
             name,
             password
         })
+
+        await loginUser(user.cpf, password)
 
         navigate("/student")
     }
