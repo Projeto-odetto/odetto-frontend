@@ -64,6 +64,7 @@ function AdminStudents() {
                                 columns={["enrollment","name","email","cpf"]}
                                 titles={["Matrícula", "Nome", "E-mail","CPF"]}
                                 values={filteredStudents}
+                                onEdit={(student) => openEdit(student)}
                             />
                     </div>
                 </div>

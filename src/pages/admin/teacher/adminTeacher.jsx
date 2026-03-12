@@ -53,6 +53,7 @@ function AdminTeachers() {
                                 columns={["cpf","name","username","hireDate","subjects"]}
                                 titles={["CPF","Nome","Login","Data de entrad", "Matérias"]}
                                 values={filteredTeachers}
+                                onEdit={(teacher) => openEdit(teacher)}
                         />
                     </div>
                 </div>
